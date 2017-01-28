@@ -1,0 +1,3 @@
+(load "pendu.lisp")
+
+(game)
