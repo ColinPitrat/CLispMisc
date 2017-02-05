@@ -37,8 +37,8 @@
     (return-from load-dict result)))
 
 (defun game ()
-  (do ((state (make-random-state T))
-       (exit nil))
+  (setf *random-state* (make-random-state t))
+  (do ((exit nil))
     (exit nil)
     (let ()
       (format t "J'ai choisis un mot. Trouvez les lettres qui le composent. Vous avez le droit à 6 erreurs.~%")
