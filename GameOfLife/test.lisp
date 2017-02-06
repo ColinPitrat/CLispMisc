@@ -93,6 +93,9 @@
 (test-gameoflife all-indices-3-3 (assert-equal (all-indices (make-instance 'gol :width 3 :height 3))
 					       '((0 0) (0 1) (0 2) (1 0) (1 1) (1 2) (2 0) (2 1) (2 2))))
 
+(test-gameoflife all-indices-2-3 (assert-equal (all-indices (make-instance 'gol :width 2 :height 3))
+					       '((0 0) (0 1) (0 2) (1 0) (1 1) (1 2))))
+
 (test-gameoflife next-generation-1 (assert-equal '(0 0 0 0 0 1 1 0 0 1 1 0 0 0 0 0)
 						 (let ((board (make-instance 'gol :width 4 :height 4)))
 						   (set-alive 1 1 board)
@@ -100,5 +103,51 @@
 						   (set-alive 2 1 board)
 						   (set-alive 2 2 board)
 						   (next-generation board))))
+
+(test-gameoflife load-game-of-life-1 (assert-equal 0 (get-cell 0 0 (load-game-of-life "board/small_empty.txt"))))
+
+(test-gameoflife load-game-of-life-2 (assert-equal 1 (get-cell 0 0 (load-game-of-life "board/small_diag.txt"))))
+
+(test-gameoflife load-game-of-life-3 (assert-equal 1 (get-cell 1 1 (load-game-of-life "board/small_diag.txt"))))
+
+(test-gameoflife load-game-of-life-4 (assert-equal 0 (get-cell 2 1 (load-game-of-life "board/small_diag.txt"))))
+
+(test-gameoflife load-game-of-life-5 (assert-equal '(0 0 0 0 0 0
+						     0 0 1 1 0 0
+						     0 1 0 0 1 0
+						     0 0 1 1 0 0
+						     0 0 0 0 0 0)
+						   (let ((board (load-game-of-life "board/beehive.txt")))
+						     (list
+						       (get-cell 0 0 board)
+						       (get-cell 1 0 board)
+						       (get-cell 2 0 board)
+						       (get-cell 3 0 board)
+						       (get-cell 4 0 board)
+						       (get-cell 5 0 board)
+						       (get-cell 0 1 board)
+						       (get-cell 1 1 board)
+						       (get-cell 2 1 board)
+						       (get-cell 3 1 board)
+						       (get-cell 4 1 board)
+						       (get-cell 5 1 board)
+						       (get-cell 0 2 board)
+						       (get-cell 1 2 board)
+						       (get-cell 2 2 board)
+						       (get-cell 3 2 board)
+						       (get-cell 4 2 board)
+						       (get-cell 5 2 board)
+						       (get-cell 0 3 board)
+						       (get-cell 1 3 board)
+						       (get-cell 2 3 board)
+						       (get-cell 3 3 board)
+						       (get-cell 4 3 board)
+						       (get-cell 5 3 board)
+						       (get-cell 0 4 board)
+						       (get-cell 1 4 board)
+						       (get-cell 2 4 board)
+						       (get-cell 3 4 board)
+						       (get-cell 4 4 board)
+						       (get-cell 5 4 board)))))
 
 (textui-test-run (get-suite gameoflife-test))
