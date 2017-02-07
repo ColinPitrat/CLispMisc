@@ -1,3 +1,4 @@
 (load "factorial.lisp")
 
-(format t "50! = ~a" (factorial:factorial 50))
+(loop for x from 1 to 50
+      do (format t "~a! = ~a~%" x (factorial:factorial x)))
