@@ -2,7 +2,8 @@
   (:use :common-lisp)
   (:export :idx :gol :set-alive :set-dead :get-cell :get-neighbours-indices
 	   :count-neighbours :next-state :all-indices :next-generation
-	   :load-game-of-life :print-board))
+	   :load-game-of-life :print-board :board-randomize :show-evolution
+	   :load-and-show-evolution))
 
 (in-package :gameoflife)
 
@@ -108,9 +109,21 @@
 	(format t "~%"))
   (format t "~%"))
 
-(defun show-evolution (file generations)
-  (do ((board (load-game-of-life file) (next-generation board))
+(defun show-evolution (board generations)
+  (do ((copy-board board (next-generation copy-board))
        (gen 0 (+ 1 gen)))
-    ((equalp generations gen) board)
-    (print-board board)
+    ((equalp generations gen) copy-board)
+    (print-board copy-board)
     (sleep 0.1)))
+
+(defun load-and-show-evolution (file generations)
+  (let ((board (load-game-of-life file)))
+    (show-evolution board generations)))
+
+(defun board-randomize (board)
+  (let ((width (slot-value board 'width))
+	(height (slot-value board 'height)))
+    (loop for x from 0 below width
+	  do (loop for y from 0 below height
+		   do (set-cell x y (random 2 (make-random-state t)) board)))
+    (return-from board-randomize board)))

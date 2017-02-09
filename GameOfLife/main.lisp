@@ -2,4 +2,5 @@
 
 (in-package :gameoflife)
 
-(show-evolution "board/pentadecathlon.txt" 16)
+;(load-and-show-evolution "board/pentadecathlon.txt" 16)
+(show-evolution (board-randomize (make-instance 'gol :width 127 :height 20)) 1000)
